@@ -4,5 +4,7 @@ public enum BRANDS {
     CaramelSprinkle,
     EnergyMax,
     SoulWater,
-    InFuse;
+    InFuse;	
+	
+	
 }

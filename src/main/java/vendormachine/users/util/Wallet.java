@@ -25,6 +25,7 @@ public class Wallet {
         this.storedCredit += credit;
     }
     
+    //This for the machine to deduct credit from the wallet - not for retrieving the value in said wallet
     public float getCredit(float retrieve) {
         if(retrieve > this.storedCredit){
             //TODO replace 'Sys.out's with Log4j
@@ -61,4 +62,27 @@ public class Wallet {
     public void setBrand(String brand){
         this.brand = brand;
     }
+    
+    //===============================
+    //===  'Other boiler code'
+    //===============================
+    
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Wallet other = (Wallet) obj;
+		if (brand == null) {
+			if (other.brand != null)
+				return false;
+		} else if (!brand.equals(other.brand))
+			return false;
+		if (Float.floatToIntBits(storedCredit) != Float.floatToIntBits(other.storedCredit))
+			return false;
+		return true;
+	}
 }

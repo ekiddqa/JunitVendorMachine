@@ -41,7 +41,7 @@ public class DrinkVendingMachine {
 
     // This is how we'll select our "snack" from the array
     public Snack selectDrink(int arrayPosition){
-        if(arrayPosition >=  drinkList.size() || arrayPosition > 0) {
+        if(arrayPosition <=  drinkList.size() && arrayPosition >= 0) {
             Snack selection = drinkList.get(arrayPosition);
 
             if(this.availableCredit < selection.cost()){
@@ -69,11 +69,11 @@ public class DrinkVendingMachine {
         this.availableCredit += user.getCredit(credit);
     }
 
-	BRANDS getBrandName() {
+	public BRANDS getBrandName() {
 		return brandName;
 	}
 
-	float getAvailableCredit() {
+	public float getAvailableCredit() {
 		return availableCredit;
 	}
 
@@ -81,16 +81,17 @@ public class DrinkVendingMachine {
 		return drinkList;
 	}
 
-	void setBrandName(BRANDS brandName) {
+	public void setBrandName(BRANDS brandName) {
 		this.brandName = brandName;
 	}
 
-	void setAvailableCredit(float availableCredit) {
+	public void setAvailableCredit(float availableCredit) {
 		this.availableCredit = availableCredit;
 	}
 
-	void setDrinkList(ArrayList<Snack> drinkList) {
+	public void setDrinkList(ArrayList<Snack> drinkList) {
 		this.drinkList = drinkList;
 	}
-
+    
+	
 }
