@@ -1,16 +1,36 @@
 package vendormachine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import vendormachine.users.Person;
 import vendormachine.users.util.Wallet;
+import vendormachine.vendors.DefaultSnacks;
 import vendormachine.vendors.DrinkVendingMachine;
 import vendormachine.vendors.enums.BRANDS;
+import vendormachine.vendors.item.Snack;
 
+@RunWith(MockitoJUnitRunner.class)
 public class DrinkVendingMachineTEST {
+	
+	@Mock
+	Wallet wallet = new Wallet();
+	
+	@Mock
+	DefaultSnacks  snackList = new DefaultSnacks();
+	
+	@InjectMocks
+	Person person = new Person("Bob");
 	
 	/** 
 	 * Task 2:
@@ -22,10 +42,16 @@ public class DrinkVendingMachineTEST {
 	 * 		80% code/line coverage
 	 * 		TDD: analyse code and add missing methods.
 	 * */
-	
+
 	DrinkVendingMachine drinkMachine = new DrinkVendingMachine();
+	
 	DrinkVendingMachine drinkMachineStuff = new DrinkVendingMachine(20f, BRANDS.CaramelSprinkle);
     
+	@BeforeEach
+	public void init() {
+	    MockitoAnnotations.initMocks(this);
+	}
+	
 	@Test
 	void testEmptyConstructureCredit() {
 		assertEquals(0, drinkMachine.getAvailableCredit());
@@ -58,17 +84,27 @@ public class DrinkVendingMachineTEST {
 	
 	@Test
 	void testSelectDrinkSuccess() {
-		assertEquals(BRANDS.CaramelSprinkle, drinkMachineStuff.selectDrink(0));
+		when(Arrays.asList(DefaultSnacks.snackList)).thenReturn(
+            new Snack("Water",0.20f),
+            new Snack("VanillaBurst", 1.75f),
+            new Snack("GoblinSpring",0.90f),
+            new Snack("Comet Trails", 2.15f));
+		
+		assertEquals(drinkMachineStuff.getDrinkList().get(0), drinkMachineStuff.selectDrink(0));
 	}
 	
 	@Test
 	void testGiveCredit() {
-		Person person = new Person("Bob");
-		Wallet wallet = new Wallet(10f);
-		person.setWallet(wallet);
-		
+	    when(wallet.getAllCredit()).thenReturn(10f);
+	    when(wallet.getCredit(10f)).thenReturn(10f);
+	    
 		drinkMachine.giveCredit(person, 10f);
 		
 		assertEquals(10f, drinkMachine.getAvailableCredit());
+	}
+	
+	@Test
+	void testGetDrinkList() {
+		
 	}
 }

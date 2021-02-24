@@ -26,4 +26,9 @@ public class Snack implements Item{
         this.price = cost;
     }
 
+	@Override
+	public String toString() {
+		return "Snack [name=" + name + ", price=" + price + "]";
+	}
+
 }

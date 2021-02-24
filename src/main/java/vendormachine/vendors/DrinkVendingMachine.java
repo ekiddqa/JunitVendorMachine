@@ -77,7 +77,7 @@ public class DrinkVendingMachine {
 		return availableCredit;
 	}
 
-	ArrayList<Snack> getDrinkList() {
+	public ArrayList<Snack> getDrinkList() {
 		return drinkList;
 	}
 
